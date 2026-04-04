@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://crttl802uac7x"]
+
+[ext_resource type="Script" uid="uid://uiptt06dj51q" path="res://scripts/enemies/Spike.gd" id="1_7a7y0"]
+[ext_resource type="Texture2D" uid="uid://nodn0mtg87g7" path="res://assets/tilemap/Sprite-0008-spike-v1.png" id="1_d2mqm"]
+
+[node name="Spike" type="Node2D" unique_id=188862205]
+metadata/_edit_vertical_guides_ = [-16.0, 16.0]
+metadata/_edit_horizontal_guides_ = [-16.0, 16.0]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1601655587]
+z_index = -1
+position = Vector2(-7.6293945e-06, -2.9802322e-07)
+scale = Vector2(1.0000005, 1)
+texture = ExtResource("1_d2mqm")
+hframes = 2
+frame = 1
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1577681427]
+position = Vector2(0, 10.5)
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_7a7y0")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D" unique_id=1314493]
+build_mode = 1
+polygon = PackedVector2Array(0, 2.5, -8, -10.5, -16, 5.5, 16, 5.5, 8, -10.5)
