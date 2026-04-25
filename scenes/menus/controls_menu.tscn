@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://dh6lfds4gd5kp"]
+
+[ext_resource type="Script" uid="uid://dwvx0lyuk7bwy" path="res://scripts/Menus/ControlsMenu.gd" id="1_ba3pm"]
+[ext_resource type="ButtonGroup" uid="uid://dbweino7a3c6l" path="res://scenes/menus/button_group.tres" id="2_ibk35"]
+
+[sub_resource type="FontFile" id="FontFile_l6cm7"]
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/32/0/ascent = 0.0
+cache/0/32/0/descent = 0.0
+cache/0/32/0/underline_position = 0.0
+cache/0/32/0/underline_thickness = 0.0
+cache/0/32/0/scale = 1.0
+cache/0/64/0/ascent = 0.0
+cache/0/64/0/descent = 0.0
+cache/0/64/0/underline_position = 0.0
+cache/0/64/0/underline_thickness = 0.0
+cache/0/64/0/scale = 1.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_l6cm7"]
+font = SubResource("FontFile_l6cm7")
+font_size = 64
+outline_size = 3
+outline_color = Color(0.24705882, 0.3529412, 0, 0.88235295)
+shadow_color = Color(0, 0, 0, 0.78431374)
+shadow_offset = Vector2(3, 3)
+
+[node name="ControlsMenu" type="Control" unique_id=1421309573]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_ba3pm")
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=647568882]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=805252737]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer" unique_id=1707302612]
+layout_mode = 2
+text = "Controls Menu"
+label_settings = SubResource("LabelSettings_l6cm7")
+horizontal_alignment = 1
+uppercase = true
+
+[node name="Keyboard" type="CheckButton" parent="CenterContainer/VBoxContainer" unique_id=1854474085]
+layout_mode = 2
+button_group = ExtResource("2_ibk35")
+text = "Keyboard"
+
+[node name="Controller" type="CheckButton" parent="CenterContainer/VBoxContainer" unique_id=1383180690]
+layout_mode = 2
+button_pressed = true
+button_group = ExtResource("2_ibk35")
+text = "Controller"
+
+[node name="Back" type="Button" parent="CenterContainer/VBoxContainer" unique_id=402356231]
+layout_mode = 2
+focus_previous = NodePath(".")
+text = "Back"

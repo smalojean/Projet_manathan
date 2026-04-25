@@ -2,6 +2,15 @@
 
 [ext_resource type="Script" uid="uid://elqw0b6xqtjq" path="res://scripts/general/Checkpoint.gd" id="1_ywqth"]
 [ext_resource type="Texture2D" uid="uid://d0lhvi0knkay" path="res://assets/tilemap/tilemap_32x32_example.png" id="1_yyywg"]
+[ext_resource type="Texture2D" uid="uid://db1xr15gajwmj" path="res://assets/tilemap/checkpoint.png" id="2_vsimk"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yqsag"]
+texture = ExtResource("2_vsimk")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ywqth"]
 texture = ExtResource("1_yyywg")
@@ -119,15 +128,17 @@ texture_region_size = Vector2i(32, 32)
 tile_size = Vector2i(32, 32)
 physics_layer_0/collision_layer = 1
 sources/3 = SubResource("TileSetAtlasSource_ywqth")
+sources/0 = SubResource("TileSetAtlasSource_yqsag")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yqsag"]
 size = Vector2(64, 64)
 
-[node name="Checkpoint" type="Node2D" unique_id=1572095304 groups=["checkpoint"]]
+[node name="Checkpoint" type="Node2D" unique_id=1572095304]
 script = ExtResource("1_ywqth")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=30617284]
-tile_map_data = PackedByteArray(0, 0, 255, 255, 0, 0, 3, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 8, 0, 0, 0, 0, 0)
+z_index = -1
+tile_map_data = PackedByteArray(0, 0, 255, 255, 254, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 254, 255, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0, 1, 0, 1, 0, 0, 0)
 tile_set = SubResource("TileSet_vsimk")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1497071710]

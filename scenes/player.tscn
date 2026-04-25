@@ -316,6 +316,10 @@ script = ExtResource("1_d2wvv")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1740670171]
 zoom = Vector2(2, 2)
+limit_left = 0
+limit_top = 0
+limit_right = 3200
+limit_bottom = 1024
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=160861690]
 position = Vector2(0, 4)
@@ -332,9 +336,11 @@ script = ExtResource("2_qhqgy")
 
 [node name="MovementComponent" type="Node" parent="." unique_id=737420277]
 script = ExtResource("3_dqkch")
-speed = 125.0
-jump_velocity = -300.0
-dash_speed = 425.0
+dash_speed = 500.0
+dash_duration = 0.2
+acceleration = 999.0
+friction = 333.0
+air_friction = 0.0
 
 [node name="WallComponent" type="Node" parent="." unique_id=207956476]
 script = ExtResource("4_dqkch")

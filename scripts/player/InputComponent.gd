@@ -1,7 +1,7 @@
 extends Node
 class_name InputComponent
 
-@export var reset_hold_time: float = 2.0
+@export var reset_hold_time: float = 1.5
 
 var _reset_timer: float = 0.0
 
@@ -31,6 +31,7 @@ func _process(delta: float) -> void:
 		_reset_timer += delta
 		if _reset_timer >= reset_hold_time:
 			_reset_timer = 0.0
+			RaceManager.reset()
 			get_tree().reload_current_scene()
 	else:
 		_reset_timer = 0.0

@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cf6wdl1l1kvsb" path="res://scripts/general/Spawner.gd" id="1_2vbf6"]
 [ext_resource type="Texture2D" uid="uid://d0lhvi0knkay" path="res://assets/tilemap/tilemap_32x32_example.png" id="2_ik2nu"]
+[ext_resource type="Texture2D" uid="uid://cmc0q6fkom1db" path="res://assets/tilemap/spawner.png" id="3_tx2ig"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ik2nu"]
 texture = ExtResource("2_ik2nu")
@@ -115,10 +116,21 @@ texture_region_size = Vector2i(32, 32)
 8:5/0 = 0
 8:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6bbd6"]
+texture = ExtResource("3_tx2ig")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, 8, 8, 8, 16, 16, -16, 16)
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 8, 16, 8, 16, 16, -16, 16)
+
 [sub_resource type="TileSet" id="TileSet_6bbd6"]
 tile_size = Vector2i(32, 32)
 physics_layer_0/collision_layer = 1
 sources/3 = SubResource("TileSetAtlasSource_ik2nu")
+sources/4 = SubResource("TileSetAtlasSource_6bbd6")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tx2ig"]
 size = Vector2(64, 64)
@@ -127,7 +139,7 @@ size = Vector2(64, 64)
 script = ExtResource("1_2vbf6")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1343916574]
-tile_map_data = PackedByteArray(0, 0, 255, 255, 0, 0, 3, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 8, 0, 0, 0, 0, 0)
+tile_map_data = PackedByteArray(0, 0, 255, 255, 254, 255, 4, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 4, 0, 0, 0, 1, 0, 0, 0, 0, 0, 254, 255, 4, 0, 1, 0, 0, 0, 0, 0, 0, 0, 255, 255, 4, 0, 1, 0, 1, 0, 0, 0)
 tile_set = SubResource("TileSet_6bbd6")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=489124906]

@@ -1,61 +1,98 @@
 extends Node
 class_name PlayerAnimation
 
+enum State {
+	IDLE,
+	RUN,
+	JUMP,
+	FALL,
+	LAND,
+	WALL_SLIDE,
+	DASH
+}
+
 var sprite: AnimatedSprite2D
-var last_animation: String = ""
-var is_landing: bool = false
+var state: State = State.IDLE
+var is_locked: bool = false # pour les animations non interruptibles
 
 func setup(p_sprite: AnimatedSprite2D) -> void:
 	sprite = p_sprite
 
-func play(anim: String) -> void:
-	if last_animation == anim:
+func set_state(new_state: State) -> void:
+	if state == new_state:
 		return
-	last_animation = anim
-	sprite.play(anim)
-	if anim != "idle":
-		sprite.animation_finished.connect(
-			func():
-				sprite.pause()
-				sprite.frame = sprite.sprite_frames.get_frame_count(anim) - 1,
-			CONNECT_ONE_SHOT)
+
+	# Bloque si une anim non interruptible est en cours
+	if is_locked:
+		return
+
+	state = new_state
+	_play_state()
+
+func _play_state() -> void:
+	match state:
+		State.IDLE:
+			sprite.play("idle")
+
+		State.RUN:
+			sprite.play("move_right")
+
+		State.JUMP:
+			sprite.play("jump")
+			_lock_until_finished()
+
+		State.FALL:
+			sprite.play("falling")
+
+		State.LAND:
+			sprite.play("reception")
+			_lock_until_finished()
+
+		State.WALL_SLIDE:
+			sprite.play("wall_slide_right")
+		
+		State.DASH:
+			sprite.play("dash")
+
+
+func _lock_until_finished() -> void:
+	is_locked = true
+	sprite.animation_finished.connect(_unlock, CONNECT_ONE_SHOT)
+
+func _unlock() -> void:
+	is_locked = false
 
 func update(body: CharacterBody2D, wall, direction: float, was_on_floor: bool) -> void:
-	if is_landing:
-		return
+	# WALL SLIDE
 	if wall.is_wall_sliding(body):
-		if sprite.animation != "wall_slide_right":
-			play("wall_slide_right")
+		set_state(State.WALL_SLIDE)
 		sprite.flip_h = body.get_wall_normal().x > 0
 		sprite.rotation_degrees = 0
-	elif not body.is_on_floor():
-		_update_air(direction, body.velocity.y)
-	else:
-		sprite.rotation_degrees = 0
-		if not was_on_floor:
-			is_landing = true
-			play("reception")
-			sprite.animation_finished.connect(_on_landing_finished, CONNECT_ONE_SHOT)
-		elif direction != 0:
-			play("move_right")
+		return
+
+	# AIR
+	if not body.is_on_floor():
+		if body.velocity.y < 0:
+			set_state(State.JUMP)
 		else:
-			play("idle")
+			set_state(State.FALL)
 
-func _update_air(direction: float, vel_y: float) -> void:
-	if vel_y < 0:
-		play("jump")
-	else:
-		if sprite.animation != "falling" and sprite.animation != "jump":
-			play("falling")
-		elif sprite.animation == "jump" and vel_y >= 0:
-			if not sprite.is_playing():
-				play("falling")
-	if direction > 0:
-		sprite.rotation_degrees = 45 if vel_y < 0 else -45
-	elif direction < 0:
-		sprite.rotation_degrees = -45 if vel_y < 0 else 45
-	else:
-		sprite.rotation_degrees = 0
+		# rotation visuelle
+		if direction > 0:
+			sprite.rotation_degrees = 45 if body.velocity.y < 0 else -45
+		elif direction < 0:
+			sprite.rotation_degrees = -45 if body.velocity.y < 0 else 45
+		else:
+			sprite.rotation_degrees = 0
 
-func _on_landing_finished() -> void:
-	is_landing = false
+		return
+
+	# SOL
+	sprite.rotation_degrees = 0
+
+	if not was_on_floor:
+		set_state(State.LAND)
+	elif direction != 0:
+		set_state(State.RUN)
+	else:
+		set_state(State.IDLE)

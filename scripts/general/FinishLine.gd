@@ -3,14 +3,17 @@ class_name FinishLine
 
 signal level_completed(time: float)
 
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var area: Area2D = $Area2D
 
 var _start_time: float = 0.0
 var _finished: bool = false
-
+	
 func _ready():
+	RaceManager.init_level()
 	_start_time = Time.get_ticks_msec() / 1000.0
 	area.body_entered.connect(_on_body_entered)
+	animated_sprite.play("idle") # 👈 ici
 	var checkpoints = get_tree().get_nodes_in_group("checkpoint")
 	print("checkpoints trouvés: ", checkpoints.size())
 	for checkpoint in checkpoints:
@@ -25,6 +28,13 @@ func _on_body_entered(body: Node2D):
 		return
 	if not body.is_in_group("player"):
 		return
+
+	var race_manager = get_node("/root/RaceManager") # adapte si besoin
+	
+	if not race_manager.can_finish():
+		print("Tous les checkpoints ne sont pas atteints")
+		return
+
 	_finished = true
 	var elapsed = (Time.get_ticks_msec() / 1000.0) - _start_time
 	emit_signal("level_completed", elapsed)
@@ -67,10 +77,11 @@ func _show_finish_screen(time: float):
 	vbox.add_child(restart_label)
 	panel.add_child(vbox)
 	overlay.add_child(panel)
-	get_tree().root.add_child(overlay)
+	add_child(overlay)
 	panel.set_anchors_preset(Control.PRESET_CENTER)
 
 	await _wait_for_restart()
+	RaceManager.reset()
 	overlay.queue_free()
 	get_tree().reload_current_scene()
 

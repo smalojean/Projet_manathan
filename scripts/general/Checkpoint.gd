@@ -7,6 +7,7 @@ signal checkpoint_reached(checkpoint: Checkpoint)
 
 var activated: bool = false
 var _checkpoint_time: float = 0.0
+var time_label: Label = null
 
 func _ready():
 	area.body_entered.connect(_on_body_entered)
@@ -18,6 +19,7 @@ func _on_body_entered(body: Node2D):
 		return
 	activated = true
 	body.set_checkpoint(self)
+	RaceManager.set_checkpoint(self)
 	emit_signal("checkpoint_reached", self)
 
 func set_time(time: float) -> void:
@@ -32,21 +34,18 @@ func _show_time_label() -> void:
 	var milliseconds: int = int((_checkpoint_time - float(total_seconds)) * 100)
 	var time_str = "%02d:%02d.%02d" % [minutes, seconds, milliseconds]
 
-	var label = Label.new()
-	label.text = time_str
-	label.add_theme_font_size_override("font_size", 16)
-	label.add_theme_color_override("font_color", Color(1.0, 0.9, 0.2))
+	if time_label == null:
+		time_label = Label.new()
+		time_label.add_theme_font_size_override("font_size", 10)
+		time_label.add_theme_color_override("font_color", Color(1.0, 0.9, 0.2))
 
-	# position en coordonnées monde au centre du checkpoint
-	var shape = area.get_node("CollisionShape2D")
-	label.position = shape.global_position - Vector2(20, 32)
+		var shape = area.get_node("CollisionShape2D")
+		time_label.position = shape.global_position - Vector2(20, 8)
 
-	# ajoute directement à la scène pour suivre le monde
-	get_tree().current_scene.add_child(label)
+		get_tree().current_scene.add_child(time_label)
 
-	await get_tree().create_timer(3.0).timeout
-	label.queue_free()
-
+	time_label.text = time_str
+	
 func get_spawn_position() -> Vector2:
 	var shape = area.get_node("CollisionShape2D")
 	var half_height: float = 0.0
