@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://tjmk14r4egsq" path="res://scenes/player.tscn" id="7_71vaj"]
 [ext_resource type="PackedScene" uid="uid://cdycfcaewvcl2" path="res://scenes/raceComponents/finish_line.tscn" id="8_gy04j"]
 [ext_resource type="PackedScene" uid="uid://b326jxrj635c0" path="res://scenes/raceComponents/checkpoint.tscn" id="9_kn31w"]
+[ext_resource type="PackedScene" uid="uid://bc0ducpa8fpfv" path="res://scenes/menus/pause_menu.tscn" id="10_1k704"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vvfd6"]
 texture = ExtResource("1_alrww")
@@ -937,7 +938,7 @@ sources/3 = SubResource("TileSetAtlasSource_x7tdj")
 sources/1 = SubResource("TileSetAtlasSource_61wbf")
 sources/2 = SubResource("TileSetAtlasSource_elm2s")
 
-[node name="Tutorial" type="Node2D" unique_id=1455053399]
+[node name="Level_I" type="Node2D" unique_id=1455053399]
 metadata/_edit_horizontal_guides_ = [135.0]
 metadata/_edit_vertical_guides_ = [32.0]
 
@@ -1004,6 +1005,12 @@ secrets_layer = NodePath("../../TileMapLayer 1")
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="SecretRevealAreas/SecretRevealArea3" unique_id=363904916]
 position = Vector2(-16, -8)
 polygon = PackedVector2Array(0, 0, 0, 32, 64, 32, 96, 0, 64, 0, 64, -32, 32, 0)
+
+[node name="PauseMenu" parent="." unique_id=686060266 instance=ExtResource("10_1k704")]
+offset_left = 248.0
+offset_top = 728.0
+offset_right = 248.0
+offset_bottom = 728.0
 
 [connection signal="body_entered" from="SecretRevealAreas/SecretRevealArea" to="SecretRevealAreas/SecretRevealArea" method="_on_body_entered"]
 [connection signal="body_exited" from="SecretRevealAreas/SecretRevealArea" to="SecretRevealAreas/SecretRevealArea" method="_on_body_exited"]

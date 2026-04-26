@@ -13,22 +13,26 @@ func setup(p_body: CharacterBody2D, p_animation: PlayerAnimation, p_race: RaceMa
 func die() -> void:
 	if body.is_dead:
 		return
+
 	body.is_dead = true
-	animation.last_animation = "death"
+	animation.is_locked = true
+	animation.state = PlayerAnimation.State.DIE
 	body.animated_sprite.play("death")
+
 	await body.get_tree().create_timer(1).timeout
+
 	_respawn()
+
 	body.is_finished = false
-	animation.last_animation = ""
+	animation.is_locked = false
 	body.is_dead = false
-	animation.play("idle")
+	animation.set_state(PlayerAnimation.State.IDLE)
 
 func _respawn() -> void:
-	var checkpoint = race.last_checkpoint
-	if checkpoint:
-		body.global_position = checkpoint.get_spawn_position()
-	else:
-		var spawner = body.get_tree().get_first_node_in_group("spawner")
-		if spawner:
-			body.global_position = spawner.global_position + Vector2(0, -13)
-		race.reset()
+	var spawner = body.get_tree().get_first_node_in_group("spawner")
+
+	if spawner:
+		body.global_position = spawner.global_position + Vector2(0, -13)
+
+	race.reset()
+	get_tree().reload_current_scene()

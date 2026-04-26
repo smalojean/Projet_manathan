@@ -8,7 +8,8 @@ enum State {
 	FALL,
 	LAND,
 	WALL_SLIDE,
-	DASH
+	DASH,
+	DIE
 }
 
 var sprite: AnimatedSprite2D
@@ -53,6 +54,9 @@ func _play_state() -> void:
 		
 		State.DASH:
 			sprite.play("dash")
+			
+		State.DIE:
+			sprite.play("death")
 
 
 func _lock_until_finished() -> void:

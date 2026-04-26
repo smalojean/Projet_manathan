@@ -62,7 +62,7 @@ func _show_finish_screen(time: float):
 
 	title.text = "NIVEAU TERMINÉ!"
 	time_label.text = "Temps : " + time_str
-	restart_label.text = "Appuie sur Entrée pour recommencer"
+	restart_label.text = "Appuie sur Backspace ou Select pour recommencer"
 
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	time_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -81,14 +81,20 @@ func _show_finish_screen(time: float):
 	panel.set_anchors_preset(Control.PRESET_CENTER)
 
 	await _wait_for_restart()
-	RaceManager.reset()
+	
+	if not is_inside_tree():
+		return
+
 	overlay.queue_free()
 	get_tree().reload_current_scene()
 
 func _wait_for_restart() -> void:
-	while true:
-		await get_tree().process_frame
-		if Input.is_action_just_pressed("ui_accept"):
+	var tree := get_tree()
+
+	while is_inside_tree():
+		await tree.process_frame
+
+		if Input.is_action_just_pressed("Button 4"):
 			return
 
 func reset_timer() -> void:

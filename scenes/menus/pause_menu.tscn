@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://bc0ducpa8fpfv"]
+
+[ext_resource type="Script" uid="uid://b1bnxb1fnuswn" path="res://scripts/Menus/PauseMenu.gd" id="1_fwndu"]
+
+[node name="PauseMenu" type="Control" unique_id=686060266]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_fwndu")
+
+[node name="MenuContainer" type="Control" parent="." unique_id=1956043986]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1974117886]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=1471073640]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer" unique_id=1600793921]
+layout_mode = 2
+text = "Pause"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ResetRace" type="Button" parent="CenterContainer/VBoxContainer" unique_id=2002396935]
+layout_mode = 2
+text = "Reset the Race"
+
+[node name="Options" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1329365928]
+layout_mode = 2
+text = "Options"
+
+[node name="BackToMenu" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1041044011]
+layout_mode = 2
+text = "Back to Menu"

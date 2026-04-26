@@ -19,6 +19,7 @@ func _ready() -> void:
 	anim.setup(animated_sprite)
 	death.setup(self, anim, race)
 	movement.setup(input_component)
+	$InputComponent.reset_requested.connect(_on_reset_requested)
 
 func _physics_process(delta: float) -> void:
 	if is_dead or is_finished:
@@ -37,6 +38,9 @@ func _physics_process(delta: float) -> void:
 
 func set_checkpoint(checkpoint: Checkpoint) -> void:
 	race.set_checkpoint(checkpoint)
+
+func _on_reset_requested() -> void:
+	die()
 
 func die() -> void:
 	death.die()

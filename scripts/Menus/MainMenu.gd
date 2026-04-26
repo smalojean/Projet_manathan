@@ -16,7 +16,8 @@ func _on_tutorial_pressed():
 	get_tree().change_scene_to_file("uid://d2yklxp1pbh4c")
 
 func _on_speed_run_pressed():
-	print("SpeedRun pressed")
+	RaceManager.reset()
+	get_tree().change_scene_to_file("uid://bfulpt4nbclfh")
 
 func _on_campaign_pressed():
 	print("Campaign pressed")
